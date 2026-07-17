@@ -3,6 +3,9 @@ const sendEmail = require('../utils/sendEmail');
 
 const addOrderItems = async (req, res) => {
   try {
+    console.log("req.user:", req.user);
+    console.log("req.body:", req.body);
+
     const { items, totalAmount, address, paymentId } = req.body;
     if (items && items.length === 0) {
       return res.status(400).json({ message: 'No order items' });
@@ -26,17 +29,27 @@ const addOrderItems = async (req, res) => {
         <p>Thank you for shopping with ShopNest!</p>
       `;
 
-      await sendEmail({
-        email: req.user.email,
-        subject: 'ShopNest - Order Confirmation',
-        message
-      });
+      try {
+  await sendEmail({
+    email: req.user.email,
+    subject: "ShopNest - Order Confirmation",
+    message,
+  });
+} catch (err) {
+  console.error("Email Error:", err.message);
+}
 
       res.status(201).json(createdOrder);
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  console.error("===== ORDER ERROR =====");
+  console.error(error);
+  console.error(error.stack);
+
+  res.status(500).json({
+    message: error.message,
+  });
+}
 };
 
 const getMyOrders = async (req, res) => {
