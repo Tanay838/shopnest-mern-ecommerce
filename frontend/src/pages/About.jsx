@@ -12,17 +12,7 @@ const About = () => {
     textAlign: 'center'
   };
 
-  const socialBtnStyle = {
-    display: 'inline-block',
-    margin: '10px',
-    padding: '10px 20px',
-    background: '#27272a',
-    color: '#fff',
-    borderRadius: '8px',
-    textDecoration: 'none',
-    transition: 'all 0.3s ease',
-    border: '1px solid rgba(255, 255, 255, 0.1)'
-  };
+
 
   return (
     <div style={containerStyle}>
