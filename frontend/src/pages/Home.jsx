@@ -7,17 +7,25 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const API_URL = process.env.REACT_APP_API_URL;
-        const res = await fetch(`${API_URL}/api/products`);
-        const data = await res.json();
-        setProducts(data.slice(0, 4)); // Featured products
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  try {
+    const API_URL = process.env.REACT_APP_API_URL;
+    console.log("API_URL:", API_URL);
+
+    const res = await fetch(
+  "https://shopnest-backend-svik.onrender.com/api/products"
+);
+    console.log("Status:", res.status);
+
+    const data = await res.json();
+    console.log("Products:", data);
+
+    setProducts(data.slice(0, 4));
+  } catch (error) {
+    console.error("Fetch Error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
     fetchProducts();
   }, []);
 
