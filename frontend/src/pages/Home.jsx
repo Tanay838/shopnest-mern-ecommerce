@@ -8,7 +8,8 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('/api/products');
+        const API_URL = process.env.REACT_APP_API_URL;
+        const res = await fetch(`${API_URL}/api/products`);
         const data = await res.json();
         setProducts(data.slice(0, 4)); // Featured products
       } catch (error) {
