@@ -4,30 +4,26 @@ import ProductCard from '../components/ProductCard';
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("https://shopnest-backend-svik.onrender.com/api/products");
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-  try {
-    const API_URL = process.env.REACT_APP_API_URL;
-    console.log("API_URL:", API_URL);
+      console.log("Status:", res.status);
 
-    const res = await fetch(
-  "https://shopnest-backend-svik.onrender.com/api/products"
-);
-    console.log("Status:", res.status);
+      const data = await res.json();
+      console.log("Data:", data);
 
-    const data = await res.json();
-    console.log("Products:", data);
+      setProducts(data.slice(0, 4));
+    } catch (err) {
+      console.error("ERROR:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    setProducts(data.slice(0, 4));
-  } catch (error) {
-    console.error("Fetch Error:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-    fetchProducts();
-  }, []);
+  fetchProducts();
+}, []);
 
   return (
     <div className="home-container">
